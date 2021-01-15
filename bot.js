@@ -3,8 +3,7 @@ const { send } = require("process");
 const { MessageChannel } = require("worker_threads");
 const client = new Discord.Client();
 const config = require("./config.json");
-const yuki = Discord.User.ID =
-
+require('dotenv').config()
 
 client.on("ready", () => {
     console.log(`Bot iniciado, com ${client.users.cache.size} usuarios, em ${client.channels.cache.size} canais, em ${client.guilds.cache.size} servidores.`);
@@ -21,24 +20,50 @@ client.on("guildDelete", guild => {
      client.user.setActivity(`Serving ${client.guilds.cache.size} server`);
 });
 
-client.on(`message`, msg => {
+// Funções
+client.on("message", msg => {
+
+    if(msg.author.bot) return;
+
     if(msg.content === 'ping') {
-        msg.reply(`Pong`);
-    //if(msg.author.bot) return;
+        msg.channel.send("Pong");
     }
-});
-
-client.on(`message`, msg => {
+    
     if(msg.content === 'pong') {
-        msg.reply('ping');
-    //if(msg.author.bot) return;
+        msg.channel.send('ping');
     }
+
+    if(msg.content === 'yuki') {
+
+        checaYuki().then( status => {
+
+            if (status == 'online'){
+                msg.channel.send("Yuki Online");
+            }
+            
+            else if (status == 'offline'){
+                msg.channel.send("Yuki Offline");
+            }
+
+            else{
+                msg.channel.send('Erro de Servidor')
+            }
+        })
+    }
+    
 });
 
-client.on(`message`, msg => {
-    if(msg.content === 'yuki') {
-        msg.reply(`Hum ${Discord.Presence = yuki}`); //tenho q arrumar sa porra;
+async function checaYuki(){
+    try {
+        let yuki = client.users.cache.get(process.env.YUKI_ID)
+        return yuki.presence.status
+
     }
-});
+    catch(error){
+        return error
+
+    }
+    
+}
 
 client.login(config.token);
