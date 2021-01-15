@@ -36,6 +36,7 @@ client.on("message", msg => {
     if(msg.content === 'yuki') {
 
         checaYuki().then( status => {
+            console.log(status)
 
             if (status == 'online'){
                 msg.channel.send("Yuki Online");
