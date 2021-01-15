@@ -3,7 +3,7 @@ const { send } = require("process");
 const { MessageChannel } = require("worker_threads");
 const client = new Discord.Client();
 const config = require("./config.json");
-const yuki = Discord.User.ID = 273902318276050944;
+const yuki = Discord.User.ID =
 
 
 client.on("ready", () => {
