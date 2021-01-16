@@ -56,8 +56,8 @@ client.on("message", msg => {
 
 async function checaYuki(){
     try {
-        let yuki = client.users.cache.get(process.env.YUKI_ID)
-        return yuki.presence.status
+        let yuki = await client.users.fetch(process.env.USER_ID)
+        return  yuki.presence.status
 
     }
     catch(error){
